@@ -1,0 +1,117 @@
+package com.praveen.demo.service;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.praveen.demo.model.ScanRequest;
+import com.praveen.demo.model.ScanResponse;
+import com.praveen.demo.util.CodeLine;
+import com.praveen.demo.util.JavaLang;
+
+@Service
+public class ScanService {
+	
+	@Autowired
+	ScanResponse response;
+	
+	@Autowired
+	JavaLang javaLang;
+	
+	@Autowired
+	CodeLine codeLine;
+	
+	public ScanResponse scan(ScanRequest request) {
+		if(request.getLanguage().equalsIgnoreCase("java")) {
+			computeResponse(request.getFilePath(), javaLang.getIMPORT(), javaLang.getVARSYMBOLS(), javaLang.getSINGLE_LINE_COMMENT_SYMBOL(), javaLang.getMULTI_LINE_COMMENT_START(), javaLang.getMULTI_LINE_COMMENT_END());
+		}
+		
+		
+		return response;
+	}
+
+	private void computeResponse(ArrayList<String> filePath, String imports, ArrayList<String> variableSymbols, String singleComment, String multiCommentStart, String multiCommentEnd) {
+		// TODO Auto-generated method stub
+		int blankLines = 0;
+		int commentLines = 0;
+		int totalCodeLines = 0;
+		int variableDecl = 0;
+		int importLines = 0;
+		
+		for(int i = 0; i < filePath.size(); ++i) {
+			File file = new File(filePath.get(i));
+			try {
+				Scanner sc = new Scanner(file);
+				
+				while(sc.hasNextLine()) {
+					String line = sc.nextLine().trim();
+					boolean multiCommentFlag = false;
+					
+					// Check if it is blank line
+					if(line.isBlank()) {
+						++blankLines;
+						continue;
+					}
+				/*	System.out.println(line.length());
+					System.out.println(line.substring(0, singleComment.length()-1));
+					System.out.println("");*/
+					
+
+					// Check if it is a single comment line. This line for example.
+					if(line.length() >= singleComment.length() && line.substring(0, singleComment.length()).equalsIgnoreCase(singleComment)) {
+						++commentLines;
+						continue;
+					}
+					
+					// Check for multi line comment already exists
+					if(multiCommentFlag) {
+						++commentLines;
+						
+						// Check if multiComment ends in this line.
+						if(line.contains(multiCommentEnd)) {
+							multiCommentFlag = false;
+						}
+						
+						continue;
+						
+					}
+					
+					// Check if multi line comment starts here
+					if(line.length() > multiCommentStart.length() && line.substring(0, multiCommentStart.length()).equalsIgnoreCase(multiCommentStart)) {
+						multiCommentFlag = true;
+						++commentLines;
+						continue;
+					}
+					
+					// Check if multicomment starts in the middle of the line
+					if(line.contains(multiCommentStart)) {
+						multiCommentFlag = true;
+					}
+					
+					
+					
+					
+				}
+				
+				sc.close();
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error occured while reading file :" + filePath.get(i));
+				e.printStackTrace();
+			}
+		}
+		
+		response.setBlankLines(blankLines);
+		response.setCommentLines(commentLines);
+		codeLine.setImportLines(importLines);
+		codeLine.setTotalLines(totalCodeLines);
+		codeLine.setVariableDeclarationLines(variableDecl);
+		
+	}
+
+}
