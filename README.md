@@ -14,10 +14,10 @@ This tool can estimate the lines of code in multiple source files. Given list of
 
 # Set up and Running
 1)Just clone the repository and import the file as a maven project in STS(Spring Tool Suite), IntelliJ or Eclipse etc which supports spring.  
-2) run mvn clean install from terminal to build it once
-3) Run as Spring Boot Application
-4) The service will start in URL: localhost:8080
-5) Make client request with postman as shown below.
+2) run mvn clean install from terminal to build it once.  
+3) Run as Spring Boot Application.  
+4) The service will start in URL: localhost:8080  
+5) Make client request with postman as shown below.  
 
 # URL
 localhost:8080
