@@ -11,15 +11,13 @@ import com.praveen.demo.service.ScanService;
 
 @RestController
 public class CodeScanController {
-	
+
 	@Autowired
 	ScanResponse result;
-	
+
 	@Autowired
 	ScanService scanService;
-	
-	
-	
+
 	@GetMapping("/")
 	public ScanResponse scan(@RequestBody ScanRequest request) {
 		result = scanService.scan(request);
