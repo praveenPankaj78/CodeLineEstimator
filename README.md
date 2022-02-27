@@ -1,4 +1,4 @@
-# CodeScanner
+# CodeLineEstimator
 It scans any number of code files to estimate line of codes, comments, imports, variable declarations etc
 
 # URL
@@ -9,8 +9,8 @@ Accepts JSON. Below is a sample of JSON request for 2 Java files
 {
     "language": "Java",
     "filePath": [
-        "C:\\Users\\prave\\Documents\\Spring_Workspace\\CodeScanner\\src\\main\\resources\\Javainput1.txt",
-        "C:\\Users\\prave\\Documents\\Spring_Workspace\\CodeScanner\\src\\main\\resources\\Javainput2.txt"
+        "C:\\Users\\prave\\Documents\\Spring_Workspace\\CodeLineEstimator\\src\\main\\resources\\Javainput1.txt",
+        "C:\\Users\\prave\\Documents\\Spring_Workspace\\CodeLineEstimator\\src\\main\\resources\\Javainput2.txt"
     ]
 }
 NOTE : \\ is used if path is in windows OS. In Linux or Mac use /
