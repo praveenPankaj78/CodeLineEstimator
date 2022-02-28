@@ -4,7 +4,7 @@ This tool can estimate the lines of code in multiple source files. Given list of
 2) Number of lines with comments (including multi line comments)
 3) Number of lines with code
 4) Total number of lines in the files
-5) Classify and return the line counts as imports, packages, variable declarations etc.
+5) Classify and return the line counts as imports, variable declarations etc.
 
 # Features
 1) It supports multiple programming language syntax (eg Java, C, Javascript etc).
