@@ -9,10 +9,19 @@ public class ScanResponse {
 
 	private int blankLines;
 	private int commentLines;
+	private int totalFileLines;
 	private CodeLine codeLines;
 
 	public int getBlankLines() {
 		return blankLines;
+	}
+
+	public int getTotalFileLines() {
+		return totalFileLines;
+	}
+
+	public void setTotalFileLines(int totalFileLines) {
+		this.totalFileLines = totalFileLines;
 	}
 
 	public void setBlankLines(int blankLines) {

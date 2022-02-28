@@ -13,6 +13,7 @@ import com.praveen.demo.model.ScanResponse;
 import com.praveen.demo.util.CLang;
 import com.praveen.demo.util.CodeLine;
 import com.praveen.demo.util.JavaLang;
+import com.praveen.demo.util.JavaScriptLang;
 
 @Service
 public class ScanService {
@@ -27,17 +28,25 @@ public class ScanService {
 	CLang cLang;
 
 	@Autowired
+	JavaScriptLang javaScriptLang;
+
+	@Autowired
 	CodeLine codeLine;
 
 	public ScanResponse scan(ScanRequest request) {
-		if (request.getLanguage().equalsIgnoreCase("java")) {
+		if (request.getLanguage().equalsIgnoreCase(javaLang.getLANGUAGE())) {
 			computeResponse(request.getFilePath(), javaLang.getIMPORT(), javaLang.getVARSYMBOLS(),
 					javaLang.getSINGLE_LINE_COMMENT_SYMBOL(), javaLang.getMULTI_LINE_COMMENT_START(),
 					javaLang.getMULTI_LINE_COMMENT_END());
-		} else if (request.getLanguage().equalsIgnoreCase("C")) {
+		} else if (request.getLanguage().equalsIgnoreCase(cLang.getLANGUAGE())) {
 			computeResponse(request.getFilePath(), cLang.getIMPORT(), cLang.getVARSYMBOLS(),
 					cLang.getSINGLE_LINE_COMMENT_SYMBOL(), cLang.getMULTI_LINE_COMMENT_START(),
 					cLang.getMULTI_LINE_COMMENT_END());
+		} else if (request.getLanguage().equalsIgnoreCase(javaScriptLang.getLANGUAGE())) {
+			computeResponse(request.getFilePath(), javaScriptLang.getIMPORT(), javaScriptLang.getVARSYMBOLS(),
+					javaScriptLang.getSINGLE_LINE_COMMENT_SYMBOL(), javaScriptLang.getMULTI_LINE_COMMENT_START(),
+					javaScriptLang.getMULTI_LINE_COMMENT_END());
+
 		}
 
 		return response;
@@ -51,6 +60,7 @@ public class ScanService {
 		int totalCodeLines = 0;
 		int variableDecl = 0;
 		int importLines = 0;
+		int totalFileLines = 0;
 
 		for (int i = 0; i < filePath.size(); ++i) {
 			File file = new File(filePath.get(i));
@@ -145,10 +155,13 @@ public class ScanService {
 			}
 		}
 
+		totalFileLines = blankLines + commentLines + totalCodeLines;
+
 		response.setBlankLines(blankLines);
 		response.setCommentLines(commentLines);
+		response.setTotalFileLines(totalFileLines);
 		codeLine.setImportLines(importLines);
-		codeLine.setTotalLines(totalCodeLines);
+		codeLine.setTotalLineOfCode(totalCodeLines);
 		codeLine.setVariableDeclarationLines(variableDecl);
 		response.setCodeLines(codeLine);
 
