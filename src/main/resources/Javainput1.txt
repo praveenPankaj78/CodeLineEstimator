@@ -1,117 +1,106 @@
-package com.praveen.demo.service;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+/* This is an example of 
+a multi line comment. This line will not 
+be counted as code line but as comment line */
 
-import com.praveen.demo.model.ScanRequest;
-import com.praveen.demo.model.ScanResponse;
-import com.praveen.demo.util.CodeLine;
-import com.praveen.demo.util.JavaLang;
+/* Java program for Merge Sort */
+class MergeSort
+{
+	// Merges two subarrays of arr[].
+	// First subarray is arr[l..m]
+	// Second subarray is arr[m+1..r]
+	void merge(int arr[], int l, int m, int r)
+	{
+		// Find sizes of two subarrays to be merged
+		int n1 = m - l + 1;
+		int n2 = r - m;
 
-@Service
-public class ScanService {
-	
-	@Autowired
-	ScanResponse response;
-	
-	@Autowired
-	JavaLang javaLang;
-	
-	@Autowired
-	CodeLine codeLine;
-	
-	public ScanResponse scan(ScanRequest request) {
-		if(request.getLanguage().equalsIgnoreCase("java")) {
-			computeResponse(request.getFilePath(), javaLang.getIMPORT(), javaLang.getVARSYMBOLS(), javaLang.getSINGLE_LINE_COMMENT_SYMBOL(), javaLang.getMULTI_LINE_COMMENT_START(), javaLang.getMULTI_LINE_COMMENT_END());
-		}
-		
-		
-		return response;
-	}
+		/* Create temp arrays */
+		int L[] = new int[n1];
+		int R[] = new int[n2];
 
-	private void computeResponse(ArrayList<String> filePath, String imports, ArrayList<String> variableSymbols, String singleComment, String multiCommentStart, String multiCommentEnd) {
-		// TODO Auto-generated method stub
-		int blankLines = 0;
-		int commentLines = 0;
-		int totalCodeLines = 0;
-		int variableDecl = 0;
-		int importLines = 0;
-		
-		for(int i = 0; i < filePath.size(); ++i) {
-			File file = new File(filePath.get(i));
-			try {
-				Scanner sc = new Scanner(file);
-				
-				while(sc.hasNextLine()) {
-					String line = sc.nextLine().trim();
-					boolean multiCommentFlag = false;
-					
-					// Check if it is blank line
-					if(line.isBlank()) {
-						++blankLines;
-						continue;
-					}
-				/*	System.out.println(line.length());
-					System.out.println(line.substring(0, singleComment.length()-1));
-					System.out.println("");*/
-					
+		/*Copy data to temp arrays*/
+		for (int i = 0; i < n1; ++i)
+			L[i] = arr[l + i];
+		for (int j = 0; j < n2; ++j)
+			R[j] = arr[m + 1 + j];
 
-					// Check if it is a single comment line. This line for example.
-					if(line.length() >= singleComment.length() && line.substring(0, singleComment.length()).equalsIgnoreCase(singleComment)) {
-						++commentLines;
-						continue;
-					}
-					
-					// Check for multi line comment already exists
-					if(multiCommentFlag) {
-						++commentLines;
-						
-						// Check if multiComment ends in this line.
-						if(line.contains(multiCommentEnd)) {
-							multiCommentFlag = false;
-						}
-						
-						continue;
-						
-					}
-					
-					// Check if multi line comment starts here
-					if(line.length() > multiCommentStart.length() && line.substring(0, multiCommentStart.length()).equalsIgnoreCase(multiCommentStart)) {
-						multiCommentFlag = true;
-						++commentLines;
-						continue;
-					}
-					
-					// Check if multicomment starts in the middle of the line
-					if(line.contains(multiCommentStart)) {
-						multiCommentFlag = true;
-					}
-					
-					
-					
-					
-				}
-				
-				sc.close();
-				
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Error occured while reading file :" + filePath.get(i));
-				e.printStackTrace();
+		/* Merge the temp arrays */
+
+		// Initial indexes of first and second subarrays
+		int i = 0, j = 0;
+
+		// Initial index of merged subarray array
+		int k = l;
+		while (i < n1 && j < n2) {
+			if (L[i] <= R[j]) {
+				arr[k] = L[i];
+				i++;
 			}
+			else {
+				arr[k] = R[j];
+				j++;
+			}
+			k++;
 		}
-		
-		response.setBlankLines(blankLines);
-		response.setCommentLines(commentLines);
-		codeLine.setImportLines(importLines);
-		codeLine.setTotalLines(totalCodeLines);
-		codeLine.setVariableDeclarationLines(variableDecl);
-		
+
+		/* Copy remaining elements of L[] if any */
+		while (i < n1) {
+			arr[k] = L[i];
+			i++;
+			k++;
+		}
+
+		/* Copy remaining elements of R[] if any */
+		while (j < n2) {
+			arr[k] = R[j];
+			j++;
+			k++;
+		}
 	}
 
+	// Main function that sorts arr[l..r] using
+	// merge()
+	void sort(int arr[], int l, int r)
+	{
+		if (l < r) {
+			// Find the middle point
+			int m =l+ (r-l)/2;
+
+			// Sort first and second halves
+			sort(arr, l, m);
+			sort(arr, m + 1, r);
+
+			// Merge the sorted halves
+			merge(arr, l, m, r);
+		}
+	}
+
+	/* A utility function to print array of size n */
+	static void printArray(int arr[])
+	{
+		int n = arr.length;
+		for (int i = 0; i < n; ++i)
+			System.out.print(arr[i] + " ");
+		System.out.println();
+	}
+
+	// Driver code
+	public static void main(String args[])
+	{
+		int arr[] = { 12, 11, 13, 5, 6, 7 };
+
+		System.out.println("Given Array");
+		printArray(arr);
+
+		MergeSort ob = new MergeSort();
+		ob.sort(arr, 0, arr.length - 1);
+
+		System.out.println("\nSorted array");
+		printArray(arr);
+	}
 }

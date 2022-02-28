@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class CodeLine {
 
-	private int totalLines;
+	private int totalLineOfCode;
 	private int importLines;
 	private int variableDeclarationLines;
 
-	public int getTotalLines() {
-		return totalLines;
+	public int getTotalLineOfCode() {
+		return totalLineOfCode;
 	}
 
-	public void setTotalLines(int totalLines) {
-		this.totalLines = totalLines;
+	public void setTotalLineOfCode(int totalLines) {
+		this.totalLineOfCode = totalLines;
 	}
 
 	public int getImportLines() {
@@ -35,8 +35,8 @@ public class CodeLine {
 
 	@Override
 	public String toString() {
-		return "CodeLine [totalLines=" + totalLines + ", importLines=" + importLines + ", variableDeclarationLines="
-				+ variableDeclarationLines + "]";
+		return "CodeLine [totalLines=" + totalLineOfCode + ", importLines=" + importLines
+				+ ", variableDeclarationLines=" + variableDeclarationLines + "]";
 	}
 
 }
