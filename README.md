@@ -20,7 +20,7 @@ This tool can estimate the lines of code in multiple source files. Given list of
 5) Make client request with postman as shown below.  
 
 # URL
-For Postman/Rest Client Request : http://localhost:8080
+For Postman/Rest Client Request : http://localhost:8080  
 For Browser UI : http://localhost:8080/ui
 
 # Request
