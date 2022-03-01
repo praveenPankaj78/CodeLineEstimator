@@ -2,6 +2,9 @@ package com.praveen.demo.model;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ScanRequest {
 
 	private String language;
