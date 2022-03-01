@@ -43,12 +43,13 @@ NOTE : \\ is used if path is in windows OS. In Linux or Mac use /
 Below is a smple JSON response body
 
 {  
-    "blankLines": 38,  
-    "commentLines": 12,  
+    "blankLines": 24,  
+    "commentLines": 29,  
+    "totalFileLines": 150,  
     "codeLines": {  
-        "totalLines": 100,  
-        "importLines": 11,  
-        "variableDeclarationLines": 8  
+        "totalLineOfCode": 97,  
+        "importLines": 5,  
+        "variableDeclarationLines": 19  
     }  
 }  
 
